@@ -3,13 +3,13 @@ from datetime import datetime
 import pandas as pd
 import os
 
-st.set_page_config(page_title="QR 출퇴근 기록", page_icon="🕒")
-st.title("🚪 QR 출퇴근 기록 시스템")
+st.set_page_config(page_title="QR 퇴근 기록", page_icon="🕒")
+st.title("🚪 퇴근 확인")
 
 LOG_FILE = "log.csv"
 
 # 이름 입력
-name = st.text_input("👤 이름을 입력해주세요")
+name = st.text_input("👤 층수_이름을 입력해주세요")
 
 # 현재 시각
 timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
