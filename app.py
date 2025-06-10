@@ -35,7 +35,7 @@ if st.button("✅ 출퇴근 기록 남기기"):
 
 # 기록 조회 영역
 st.markdown("---")
-st.header("📋 스캔 기록 보기 (관리자용)")
+st.header("📋 퇴근 기록")
 
 if os.path.exists(LOG_FILE):
     df_log = pd.read_csv(LOG_FILE)
