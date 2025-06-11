@@ -15,7 +15,7 @@ timestamp = datetime.now(kst).strftime("%Y-%m-%d %H:%M:%S")
 today_date = datetime.now(kst).strftime("%Y-%m-%d")
 
 # ▶️ 3. 이름 입력
-name = st.text_input("👤 칸수_이름을 입력해주세요")
+name = st.text_input("👤 층수_이름을 입력해주세요(EX.5층 OOO)")
 
 # ▶️ 4. Google Sheets 인증 및 열기
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
