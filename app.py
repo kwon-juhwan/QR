@@ -24,16 +24,17 @@ client = gspread.authorize(creds)
 sheet = client.open('층별 보안점검 확인').sheet1
 
 # 버튼 클릭 시 기록 저장
-if st.button("✅ 출퇴근 기록 남기기"):
+if st.button("✅ 퇴근 기록 남기기"):
     if name:
         sheet.append_row([name, timestamp])
         st.success(f"📝 {name} 님의 기록이 저장되었습니다! ({timestamp})")
     else:
         st.warning("이름을 입력해주세요.")
 
+
 # 기록 조회 영역
 st.markdown("---")
-st.header("📋 퇴근 기록 (Google Sheets 연동)")
+st.header("📋 퇴근 기록")
 
 try:
     data = sheet.get_all_records()
@@ -46,3 +47,7 @@ try:
         st.info("아직 저장된 기록이 없습니다.")
 except Exception as e:
     st.error(f"기록을 불러오는 중 오류 발생: {e}")
+
+df = pd.DataFrame(data)
+st.write("📌 컬럼 확인:", df.columns.tolist())
+
