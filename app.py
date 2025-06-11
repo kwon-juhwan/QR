@@ -1,5 +1,6 @@
 import streamlit as st
 from datetime import datetime
+import pytz
 import pandas as pd
 import os
 
@@ -12,7 +13,7 @@ LOG_FILE = "log.csv"
 name = st.text_input("👤 층수_이름을 입력해주세요")
 
 # 현재 시각
-timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+timestamp = datetime.now(pytz.timezone("Asia/Seoul")).strftime("%Y-%m-%d %H:%M:%S")
 
 # 기록 저장 함수
 def save_log(name, timestamp):
