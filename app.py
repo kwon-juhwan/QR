@@ -3,27 +3,34 @@ from datetime import datetime
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import pytz
+import pandas as pd
 
-# 페이지 설정
+# ▶️ 1. Streamlit UI 설정
 st.set_page_config(page_title="QR 퇴근 기록", page_icon="🕒")
 st.title("🚪 퇴근 확인")
 
-# 현재 시각 (한국 시간 기준)
-timestamp = datetime.now(pytz.timezone("Asia/Seoul")).strftime("%Y-%m-%d %H:%M:%S")
+# ▶️ 2. 현재 시간 (Asia/Seoul)
+kst = pytz.timezone("Asia/Seoul")
+timestamp = datetime.now(kst).strftime("%Y-%m-%d %H:%M:%S")
+today_date = datetime.now(kst).strftime("%Y-%m-%d")
 
-# 이름 입력
-name = st.text_input("👤 층수_이름을 입력해주세요")
+# ▶️ 3. 이름 입력
+name = st.text_input("👤 칸수_이름을 입력해주세요")
 
-# Google Sheets 인증
+# ▶️ 4. Google Sheets 인증 및 열기
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 creds_dict = st.secrets["gcp_service_account"]
 creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 
-# Google Sheet 열기 (시트명은 직접 변경 가능)
-sheet = client.open('층별 보안점검 확인').sheet1
+# 현재 날짜를 통해 다른 시트(날짜별 필드) 확장
+try:
+    sheet = client.open("칸별 보안점검 확인").worksheet(today_date)
+except gspread.exceptions.WorksheetNotFound:
+    sheet = client.open("칸별 보안점검 확인").add_worksheet(title=today_date, rows="100", cols="2")
+    sheet.append_row(["name", "timestamp"])  # 헤더 추가
 
-# 버튼 클릭 시 기록 저장
+# ▶️ 5. 기록 저장 버튼
 if st.button("✅ 퇴근 기록 남기기"):
     if name:
         sheet.append_row([name, timestamp])
@@ -31,21 +38,16 @@ if st.button("✅ 퇴근 기록 남기기"):
     else:
         st.warning("이름을 입력해주세요.")
 
-
-# 기록 조회 영역
+# ▶️ 6. 오늘 기억 목록 표시
 st.markdown("---")
-st.header("📋 퇴근 기록")
-
+st.header("📋 오늘 퇴근 기록")
 try:
     data = sheet.get_all_records()
     if data:
-        import pandas as pd
         df = pd.DataFrame(data)
         df = df.sort_values(by="timestamp", ascending=False)
         st.dataframe(df)
     else:
         st.info("아직 저장된 기록이 없습니다.")
 except Exception as e:
-    st.error(f"기록을 불러오는 중 오류 발생: {e}")
-
-
+    st.error(f"기록 보기 오류: {e}")
