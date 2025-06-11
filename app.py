@@ -48,6 +48,4 @@ try:
 except Exception as e:
     st.error(f"기록을 불러오는 중 오류 발생: {e}")
 
-df = pd.DataFrame(data)
-st.write("📌 컬럼 확인:", df.columns.tolist())
 
