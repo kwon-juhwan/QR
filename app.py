@@ -7,7 +7,7 @@ import pandas as pd
 
 # ▶️ 1. Streamlit UI 설정
 st.set_page_config(page_title="QR 퇴근 기록", page_icon="🕒")
-st.title("🚪 퇴근 확인")
+st.title("🚪 층별 보안점검")
 
 # ▶️ 2. 현재 시간 (Asia/Seoul)
 kst = pytz.timezone("Asia/Seoul")
@@ -31,7 +31,7 @@ except gspread.exceptions.WorksheetNotFound:
     sheet.append_row(["name", "timestamp"])  # 헤더 추가
 
 # ▶️ 5. 기록 저장 버튼
-if st.button("✅ 퇴근 기록 남기기"):
+if st.button("✅ 보안점검 완료"):
     if name:
         sheet.append_row([name, timestamp])
         st.success(f"📝 {name} 님의 기록이 저장되었습니다! ({timestamp})")
@@ -40,7 +40,7 @@ if st.button("✅ 퇴근 기록 남기기"):
 
 # ▶️ 6. 오늘 기억 목록 표시
 st.markdown("---")
-st.header("📋 오늘 퇴근 기록")
+st.header("📋 층별 보안점검 기록")
 try:
     data = sheet.get_all_records()
     if data:
