@@ -16,7 +16,8 @@ name = st.text_input("👤 층수_이름을 입력해주세요")
 
 # Google Sheets 인증
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('keyword-456501-6844a82c52d0.json', scope)
+creds_dict = st.secrets["gcp_service_account"]
+creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 
 # Google Sheet 열기 (시트명은 직접 변경 가능)
