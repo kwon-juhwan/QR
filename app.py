@@ -25,9 +25,9 @@ client = gspread.authorize(creds)
 
 # 현재 날짜를 통해 다른 시트(날짜별 필드) 확장
 try:
-    sheet = client.open("칸별 보안점검 확인").worksheet(today_date)
+    sheet = client.open("층별 보안점검 확인").worksheet(today_date)
 except gspread.exceptions.WorksheetNotFound:
-    sheet = client.open("칸별 보안점검 확인").add_worksheet(title=today_date, rows="100", cols="2")
+    sheet = client.open("층별 보안점검 확인").add_worksheet(title=today_date, rows="100", cols="2")
     sheet.append_row(["name", "timestamp"])  # 헤더 추가
 
 # ▶️ 5. 기록 저장 버튼
