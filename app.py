@@ -34,14 +34,14 @@ client = gspread.authorize(creds)
 try:
     sheet = client.open("층별 보안점검 확인").worksheet(today_date)
 except gspread.exceptions.WorksheetNotFound:
-    sheet = client.open("층별 보안점검 확인").add_worksheet(title=today_date, rows="100", cols="2")
-    sheet.append_row(["name", "timestamp"])  # 헤더 추가
+    sheet = client.open("층별 보안점검 확인").add_worksheet(title=today_date, rows="100", cols="3")
+    sheet.append_row(["floor", "name", "timestamp"])  # 헤더 추가
 
 # ▶️ 5. 기록 저장 버튼
 if st.button("✅ 보안점검 완료"):
     if name:
-        sheet.append_row([name, timestamp])
-        st.success(f"📝 {name} 님의 기록이 저장되었습니다! ({timestamp})")
+        sheet.append_row([floor, name, timestamp])
+        st.success(f"📝{floor} {name} 님의 기록이 저장되었습니다! ({timestamp})")
     else:
         st.warning("이름을 입력해주세요.")
 
