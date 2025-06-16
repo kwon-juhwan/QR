@@ -15,7 +15,10 @@ timestamp = datetime.now(kst).strftime("%Y-%m-%d %H:%M:%S")
 today_date = datetime.now(kst).strftime("%Y-%m-%d")
 
 # ▶️ 3. 이름 입력
-floor = st.sidebar.selectbox("🏢 층수를 선택해주세요", ["1층", "2층", "3층", "4층", "5층", "6층", "7층"])
+st.subheader("👤 보안점검 대상자 선택")
+
+
+floor = st.selectbox("🏢 층수를 선택해주세요", ["1층", "2층", "3층", "4층", "5층", "6층", "7층"])
 
 # 층별 이름 사전 정의
 names_by_floor = {
@@ -28,7 +31,7 @@ names_by_floor = {
 }
 
 # ❗️ 여기가 빠져 있었음: 층에 따라 이름 선택 UI 구성
-name = st.sidebar.selectbox("👤 이름을 선택해주세요", names_by_floor.get(floor, []))
+name = st.selectbox("👤 이름을 선택해주세요", names_by_floor.get(floor, []))
 
 
 # ▶️ 4. Google Sheets 인증 및 열기
