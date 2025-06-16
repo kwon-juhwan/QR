@@ -15,6 +15,8 @@ timestamp = datetime.now(kst).strftime("%Y-%m-%d %H:%M:%S")
 today_date = datetime.now(kst).strftime("%Y-%m-%d")
 
 # ▶️ 3. 이름 입력
+st.subheader(" ")
+
 
 floor = st.selectbox("🏢 층수를 선택해주세요", ["1층", "2층", "3층", "4층", "5층", "6층"])
 
